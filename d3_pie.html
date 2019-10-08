@@ -18,11 +18,18 @@
 
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
-    height = +svg.attr("height"),
+    height = +svg.attr("height")-50,
     radius = Math.min(width, height) / 2,
-    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + (height+100) / 2 + ")");
 
-var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+svg.append("text")
+    .attr("transform", "translate(220,0)")
+    .attr("x", 50)
+    .attr("y", 50)
+    .attr("font-size", "24px")
+    .text("2014-2018 Fulltime Men Applied to UCSD")
+
+var color = d3.scaleOrdinal(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56"]);
 
 var pie = d3.pie()
     .sort(null)
@@ -36,7 +43,7 @@ var label = d3.arc()
     .outerRadius(radius - 40)
     .innerRadius(radius - 40);
 
-d3.csv("data.csv", function(d) {
+d3.csv("https://raw.githubusercontent.com/Afosado/dsc106_hw1/master/ucsd_five_years.csv", function(d) {
   d.fulltime_men_applied = +d.fulltime_men_applied;
   return d;
 }, function(error, data) {
